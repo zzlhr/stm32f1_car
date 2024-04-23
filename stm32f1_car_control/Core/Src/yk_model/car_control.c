@@ -42,7 +42,10 @@ void car_go(int val) {
         turn_cons();
     }
 
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1 | TIM_CHANNEL_2 | TIM_CHANNEL_4 | TIM_CHANNEL_3, abs(o));
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, fabsf(o));
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, fabsf(o));
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, fabsf(o));
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, fabsf(o));
 
 }
 
@@ -69,25 +72,38 @@ void turn(int val) {
         turn_right();
     }
 
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1 | TIM_CHANNEL_2 | TIM_CHANNEL_4 | TIM_CHANNEL_3, fabsf(o));
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, fabsf(o));
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, fabsf(o));
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, fabsf(o));
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, fabsf(o));
 
 }
 
 
 void car_control_enable(void) {
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1 | TIM_CHANNEL_2 | TIM_CHANNEL_4 | TIM_CHANNEL_3, CAR_CONTROL_PWM_MIN);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, CAR_CONTROL_PWM_MIN);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, CAR_CONTROL_PWM_MIN);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, CAR_CONTROL_PWM_MIN);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, CAR_CONTROL_PWM_MIN);
+
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12 | GPIO_PIN_13, GPIO_PIN_SET); // 控制使能引脚
 
 }
 
 void car_control_close(void) {
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1 | TIM_CHANNEL_2 | TIM_CHANNEL_4 | TIM_CHANNEL_3, CAR_CONTROL_PWM_MIN);
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12 | GPIO_PIN_13, GPIO_PIN_SET); // 控制使能引脚
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, CAR_CONTROL_PWM_MIN);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, CAR_CONTROL_PWM_MIN);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, CAR_CONTROL_PWM_MIN);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, CAR_CONTROL_PWM_MIN);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12 | GPIO_PIN_11, GPIO_PIN_SET); // 控制使能引脚
 
 }
 
-void init_car_control(void) {
-    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1 | TIM_CHANNEL_2 | TIM_CHANNEL_3 | TIM_CHANNEL_4);
+void car_control_init(void) {
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
 
     // 控制电机使能
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
@@ -139,8 +155,8 @@ void turn_cons(void) {
 void turn_left(void) {
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_SET);
 }
 
 

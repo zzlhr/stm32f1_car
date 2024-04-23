@@ -9,8 +9,6 @@
 #define CAR_CONTROL_PWM_MIN (0)
 
 
-
-
 /**
  * 前后控制
  * @param speed >0 向前  <0 向后
@@ -25,12 +23,11 @@ void car_go(int val);
 void turn(int val);
 
 
-
 void car_control_enable(void);
 
 
 void car_control_close(void);
 
-void init_car_control(void);
+void car_control_init(void);
 
 #endif //STM32F1_CAR_CONTROL_CAR_CONTROL_H

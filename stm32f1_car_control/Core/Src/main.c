@@ -28,6 +28,7 @@
 /* USER CODE BEGIN Includes */
 #include "yk_comm/yt_comm.h"
 #include "yk_model/car_control.h"
+#include "yk_core/yk_log.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -97,7 +98,9 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-    init_car_control();
+    YK_LOG_INFO("car_control_init...");
+    car_control_init();
+    YK_LOG_INFO("Yt_Comm_Init...");
     Yt_Comm_Init();
   /* USER CODE END 2 */
 

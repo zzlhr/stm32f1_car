@@ -2,18 +2,17 @@
 // Created by 刘浩然 on 2024/4/1.
 //
 
-#include <stdio.h>
 #include "yt_comm.h"
 #include "../yk_core/yk_error_code.h"
 #include "../yk_core/yk_log.h"
 #include "yk_msg.h"
 #include "../yk_model/car_control.h"
+#include "cmsis_os2.h"
 #include <stdlib.h>
 
 #define MSG_HEADER 0x8D
 #define MAX_MSG_LEN 128
 #define MAX_LEN 128
-#define READ_TIMEOUT (MAX_LEN * 10)
 
 uint8_t recv_data[MAX_LEN];
 
@@ -53,34 +52,8 @@ void Yt_Comm_Start(void) {
 //    uint8_t result;
     HAL_UARTEx_ReceiveToIdle_DMA(&huart2, recv_data, MAX_LEN);
     while (1);
-//    while (1) {
-//        HAL_UART_IRQHandler(&huart2);
-//        result = HAL_UART_Receive_IT(&huart2, recv_data, 1);
-//        if (result != HAL_OK) {
-//            if (result == HAL_TIMEOUT) {
-////                YK_LOG_WARN("read serial data time out....");
-//            }
-//            if (result == HAL_ERROR) {
-////                YK_LOG_WARN("read serial data error....");
-//            }
-//            if (result == HAL_BUSY) {
-////                YK_LOG_WARN("read serial data busy....");
-//            }
-////            HAL_Delay(100);
-//            continue;
-//        }
-//        for (int i = 0; i < MAX_LEN; ++i) {
-//            YK_LOG_INFO("recv_data:  %02X ", recv_data[i]);
-//            if (Yt_Recv_Msg_Byte_Parse(recv_data[i], &msg)) {
-//                // 解析成功调用派发器处理
-//                Yt_Comm_Msg_Dispath(&msg);
-//            }
-//        }
-//        HAL_Delay(100);
-//    }
+
 #endif
-
-
 }
 
 
@@ -155,10 +128,9 @@ T_YkReturnCode Yt_Comm_Msg_Dispath(Yk_Comm_Typedef *msg, send_msg send_msg) {
 #elif USE_UART_CONTROL
 
 T_YkReturnCode Yt_Comm_Msg_Dispath(Yk_Comm_Typedef *msg) {
-    YK_LOG_INFO("recv data: header: %02X , Len :%02X, Msg_Id: %02X, crc:%02X",
-                msg->Head, msg->Len, msg->Msg_Id, msg->crc);
+//    YK_LOG_INFO("recv data: header: %02X , Len :%02X, Msg_Id: %02X, crc:%02X",
+//                msg->Head, msg->Len, msg->Msg_Id, msg->crc);
 
-    uint8_t *res;
     switch (msg->Msg_Id) {
         case CAR_CONTROL_ENABLE: {
             YK_LOG_INFO("CAR_CONTROL_ENABLE");
