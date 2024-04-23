@@ -25,6 +25,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "yk_comm/yt_comm.h"
+#include "yk_core/yk_log.h"
 
 /* USER CODE END Includes */
 
@@ -115,6 +117,7 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
     /* Infinite loop */
+    YK_LOG_INFO("StartDefaultTask...");
     Yt_Comm_Start();
   /* USER CODE END StartDefaultTask */
 }

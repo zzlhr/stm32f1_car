@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include "../yk_core/yk_typedef.h"
 #include "../application.h"
+#include "usart.h"
 
 typedef void (*send_msg)(uint8_t *par, int size);
 
