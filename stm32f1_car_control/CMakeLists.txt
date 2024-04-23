@@ -35,7 +35,16 @@ project(${CMAKE_PROJECT_NAME})
 message("Build type: " ${CMAKE_BUILD_TYPE})
 
 # Create an executable object type
-add_executable(${CMAKE_PROJECT_NAME})
+add_executable(${CMAKE_PROJECT_NAME}
+        Core/Src/freertos.c
+        Core/Src/yk_comm/yt_comm.h
+        Core/Src/yk_comm/yt_comm.c
+        Core/Src/yk_core/yk_crc.h
+        Core/Src/yk_core/yk_log.c
+        Core/Src/yk_model/car_control.c
+        Core/Src/yk_model/car_control.h
+        Core/Src/application.h
+)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
